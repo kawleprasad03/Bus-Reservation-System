@@ -1,0 +1,19 @@
+{% load static %}
+<header>
+    <nav class="navbar">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'image/logo.ico' %}" alt="logo" class="img1">
+        </a>
+        <a href="../checktask/?ticket_action=Cancel Ticket">Cancel Ticket</a>
+        <!-- <a href="../checktask/?ticket_action=Change Travel Date">Change Travel Date</a> -->
+        <a href="../checktask/?ticket_action=Show My Ticket">Show My Ticket</a>
+        <a href="../checktask/?ticket_action=Change Details">Change Details</a>
+        <button class="login-button">Login</button>
+    </nav>
+    <div class="account-info">
+        <img src="{% static 'image/icons8-account-48.png' %}" alt="icon" class="img2">
+        <div class="account-name">{{account_name}}</div>
+        <a href="../logout/" class="log-out">Log out</a> 
+        <!-- data-context="{{ account_name }}" -->
+    </div>
+</header>

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Reservation Cancellation</title>
+    <link rel="stylesheet" href="{%static  'css/checktask.css' %}">
+</head>
+
+<body>
+    {% include "home/header.html" %}
+    <main>
+        <div class="form">
+            <h2>{{action}}</h2>
+            <form action="../cscdetails/" method="post">
+                {% csrf_token %}
+                <label for="reservation-id">Reservation ID:</label>
+                <input type="text" id="reservation-id" name="reservation-id" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <div class="center-button">
+                    <button type="submit">Search</button>
+                </div>
+                <div class="reservationidcheck">{{ reservationcheck }}</div>
+                <div class="cancellationdatecheck">{{ cancellationdatecheck }}</div>
+                <div class="changedetailsdatecheck">{{ changedetailsdatecheck }}</div>
+                <div class="updatestatus">{{ updatestatus }}</div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'js/checktask.js' %}" type="text/javascript"></script>
+</body>
+
+</html>

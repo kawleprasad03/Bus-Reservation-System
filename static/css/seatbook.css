@@ -1,0 +1,719 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #d7d6fe;
+  }
+
+  .header {
+    background-color: #898ae6;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .travelingcity {
+    font-size: x-large;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .travelingcity , #seats , h1 {
+    margin-left: 10px;
+  } 
+/* 
+  .imgarrow {
+    object-fit: cover;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 50%);
+  } */
+
+  .account-check{
+    display: none;
+  }
+
+ .selected-date {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+    font-weight: bold;
+    gap: 20px;
+ }
+
+ .date-day {
+  text-align: center;
+ }
+
+ .date-day div:nth-of-type(2) {
+    font-size: medium;
+ }
+
+ .legend {
+  margin-left: 75px;
+ }
+
+ .avail-unavail {
+  display: flex;
+  margin-top: 5px;
+ }
+
+ .available-legend {
+  width: 20px;
+  border: thin solid black;
+  border-radius: 3px;
+  background: #00FF00;
+  margin-right: 5px;
+ }
+
+ .avail-text {
+  margin-right: 20px;
+ }
+
+ .unavailable-legend {
+  width: 20px;
+  border: thin solid black;
+  border-radius: 3px;
+  background: #26282A;
+  margin-right: 5px;
+ }
+
+ .seat-points {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+ }
+
+  #seats {
+    border: 1px solid #ccc;
+    width: 45%;
+    height: fit-content;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    /* display: none; */
+  }
+
+  .row:nth-of-type(2) {
+    margin-bottom: 30px;
+  }
+
+  .row:nth-of-type(1) {
+    padding-top: 10px;
+  }
+
+  .row:nth-of-type(4) {
+    padding-bottom: 10px;
+  }
+
+  .row {
+    text-align: center;
+    padding-left: 40px;
+  }
+
+  #steering-wheel {
+    width:30px;
+    height:30px;
+    margin-top:10px;
+    float: inline-start;    
+    margin-left: 5px;
+    margin-right: -33px;
+    padding-top: 10px;
+  }
+
+  /* Style for seats */
+  .seat {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    display: inline-block;
+    /* border: 1px solid #000; */
+    text-align: center;
+    line-height: 40px;
+  }
+  /* Style for booked seats */
+  .booked {
+    background-color: #00FF00;
+    color: #FFF;
+    /* cursor: not-allowed; */
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  /* Style for available seats */
+  .available {
+    background-color: whitesmoke;
+    cursor: pointer;
+    color: black;
+    border-radius: 6px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .checktypeofbus, .allbookedseat {
+    margin-left: 5px;
+    visibility: hidden;
+  }
+
+  /* boarding and dropping Css from below */
+  .container {
+      border: 1px solid #ffffff;
+      width: 35%;
+      background-color: #ccc;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      margin-right: 10px;
+  }
+
+  .radio-div {
+      display: flex;
+      justify-content: center;
+      font-size: x-large;
+      overflow-y: scroll;
+      height: 215px;
+  }
+  .radio-div::-webkit-scrollbar {
+      width: 10px;
+  }
+
+  .radio-div::-webkit-scrollbar-track {
+      background: whitesmoke;
+  }
+  
+  .radio-div::-webkit-scrollbar-thumb {
+      background: #0056b3;
+      border-radius: 60px;
+  }
+
+  input[type=radio] {
+      width: 45px;
+      height: 17px;
+      margin-left: -5px;
+  }
+
+  label[for="address"] {
+      font-size: large;
+      color: rgba(0, 0, 0, 0.467);
+      margin-left: 48px;
+  }
+
+  .amount {
+      display: none;
+      justify-content: space-between;
+      padding-left: 10px;
+      padding-right: 10px;
+      font-size: larger;
+      font-weight: bolder;
+  }
+
+  .continue-button {
+      display: flex;
+      justify-content: center;    
+      margin-top: 10px;
+      margin-bottom: 15px;
+  }
+
+  #continue:hover {
+      background-color: #0056b3;
+  }
+
+  #continue {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 190px;
+      cursor: pointer;
+      font-size: larger;
+      transition: background-color 0.3s ease;
+  }
+
+  .options {
+      display: none;
+  }
+
+  .headerpoint {
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-weight: bold;
+      display: flex;
+      gap: 60px;
+      font-size: x-large;
+      justify-content: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+
+  #boardingHeader.active {
+    border-bottom: thick solid blue;
+  }
+
+  #droppingHeader.active {
+    border-bottom: thick solid blue;
+  }
+
+  /* Style for visible options */
+  .options.active {
+      display: block;
+  }
+
+
+
+/*### Passenger details form Style ### */
+  .passenger-details {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      left: 28%;
+      top: 10px;
+      display: none;
+      transform: scale(0);
+    }
+  
+    .passenger-details.active {
+      display: flex;
+      transform: scale(1);
+    }
+  
+
+  .details-box {
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 8px;
+      width: 540px;
+      height: fit-content;
+      padding-top: 0%;
+      display: grid;
+      justify-content: center;
+  }
+
+  .inner-box {
+      background-color: whitesmoke;
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      border: thin solid blue;
+      width: 500px;
+      height: fit-content;
+      padding-top: -2%;
+      margin: 5px;
+  }
+
+  .form-group1 , .form-group2 , .form-group3 {
+      margin-bottom: 15px;
+      margin-left: 15px;
+      margin-right: 15px;
+  }
+
+  .form-group2 {
+      display: flex;
+      justify-content: space-between;
+  }
+
+
+  .passenger-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 7px;
+      margin-top: 7px;
+  }
+
+  input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: thin solid blue;
+      border-radius: 5px;
+  }
+
+  input:focus {
+    outline: 0;
+  }
+
+  .gender{
+      width: 100px;
+      height: 30px;
+      border: thin solid blue;
+      border-radius: 5px;
+      text-align: center;
+      display: flex;
+      box-sizing: content-box;
+      -webkit-appearance: none;
+  }
+  
+  select:focus {
+    outline: 0;
+  }
+  
+  .proceed-button {
+      display: flex;
+      justify-content: center;
+  }
+  
+  .close {
+      font-size: 32px;
+      background-color: #007BFF;
+      border-radius: 5px;
+      color: #000;
+      position: absolute;
+      left: 542px;
+      top: -10px;
+      background: transparent;
+      padding: 2px 10px;
+  }
+
+  button {
+      background-color: #007BFF;
+      margin-top: 10px;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;  
+  }
+
+  button:hover {
+      background-color: #0056b3;
+  }
+  .subheading{
+    font-size: large;
+  }
+
+  .heading{
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 25px;
+    margin-bottom: 20px;
+  }
+
+
+
+ /* AC seat css */
+
+  .ACseatsbus {
+    display: none;
+  }
+  .deck {
+    font-size: large;
+    margin-top: 10px;
+   }
+
+    #seats1 , #seats2 {
+      border: 1px solid #ccc;
+      /* width: 45%; */
+      height: fit-content;
+      background-color: #ffffff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .ACrow:nth-of-type(2) {
+      margin-bottom: 30px;
+    }
+
+    .ACrow:nth-of-type(1) {
+      padding-top: 10px;
+    }
+
+    .ACrow:nth-of-type(4) {
+      padding-bottom: 10px;
+    }
+
+    .ACrow {
+      text-align: center;
+      padding-left: 55px;
+    }
+
+    #steering-wheel {
+      width:30px;
+      height:30px;
+      margin-top:10px;
+      float: inline-start;    
+      margin-left: 5px;
+      margin-right: -33px;
+      padding-top: 10px;
+    }
+
+    /* Style for seats */
+    .ACseat {
+      width: 55px;
+      height: 25px;
+      margin: 5px;
+      display: inline-block;
+      /* border: 1px solid #000; */
+      text-align: center;
+      line-height: 25px;
+    }
+
+
+
+
+
+    /* signup css */
+
+.signup{
+  width: 32%;
+  margin: 50px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+  position: absolute;
+  left: 32%;
+  top: -40px;
+  transform: scale(0);
+  display: none;
+}
+
+.signup.active-signup {
+  transform: scale(1);
+  display: block;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.close2 {
+  font-size: 30px;
+  background-color: #007BFF;
+  color: #000;
+  position: absolute;
+  right: 0px;
+  top: -10px;
+  background: transparent;
+  padding: 2px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.name , .age-gender , .password-confirmpass {
+  display: flex;
+  justify-content: space-between;
+}
+
+#gender {
+  -webkit-appearance: none;
+}
+
+#fname, #lname, #gender, #age, #phone, #email, #uname, #pwd , #cpwd , input[type=password] {
+  width: 100%;
+  padding: 10px 15px;
+  /* margin: 8px 0; */
+  display: inline-block;
+  border: thin solid blue;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#fname:focus ,
+#lname:focus , 
+#gender:focus ,
+#age:focus ,
+#phone:focus , 
+#email:focus , 
+#uname:focus , 
+#pwd:focus , 
+#cpwd:focus , 
+input[type=password]:focus  {
+  outline: 0;
+}
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+input[type=submit] {
+  width: 25%;
+  font-size: 16px;
+  background-color: #007BFF;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type=submit]:hover {
+  background-color: #0056b3;
+}
+
+label {
+  color: #888;
+  font-size: 18px;
+}
+
+#eyeicon2 {
+  position: absolute;
+  bottom: 90px;
+  width: 20px;
+  height: 20px;
+  right: 261px;
+}
+
+#eyeicon3 {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 90px;
+  right: 24px;
+}
+
+
+
+/* payment div css form below */
+.container1 {
+  margin: 20px auto;
+  width: 800px;
+  padding: 30px
+}
+
+.card.box2 {
+  width: 450px;
+  height: 500px;
+  background-color: #ffffff;
+  border-radius: 0;
+  padding: 20px;
+  position: absolute;
+  top: 20px;
+  right: 440px;
+  transform: scale(0);
+  display: none;
+}
+
+.card.box2.active {
+  transform: scale(1);
+  display: block;
+}
+
+.box2 .btn.btn-primary.bar {
+  width: 20px;
+  background-color: transparent;
+  border: none;
+  color: #3ecc6d
+}
+
+.box2 .btn.btn-primary.bar:hover {
+  color: #baf0c3
+}
+
+
+.nav.nav-tabs {
+  border: none;
+  border-bottom: 2px solid #ddd;
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav.nav-tabs .nav-item .nav-link {
+  border: none;
+  color: black;
+  border-bottom: 2px solid transparent;
+  font-size: 18px
+}
+
+.nav.nav-tabs .nav-item .nav-link:hover {
+  border-bottom: 2px solid #0056b3;
+  color: #0056b3;
+}
+
+.nav.nav-tabs .nav-item .nav-link.active {
+  border: none;
+  border-bottom: 2px solid #0056b3;
+}
+
+.form-control {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  box-shadow: none;
+  height: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 15px 0px;
+  letter-spacing: 1.5px;
+  border-radius: 0
+}
+
+.inputWithIcon {
+  position: relative
+}
+
+img {
+  width: 50px;
+  height: 28px;
+  object-fit: cover
+}
+
+.inputWithIcon span {
+  position: absolute;
+  right: 0px;
+  bottom: 9px;
+  color: #57c97d;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-bottom: 1px solid #ddd
+}
+
+
+form {
+  font-size: 14px
+}
+
+form .btn.btn-primary {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #007BFF;
+  border: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+form .btn.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width:750px) {
+  .container {
+      padding: 10px;
+      width: 100%
+  }
+
+  .text-green {
+      font-size: 14px
+  }
+
+  
+  .card.box2 {
+      width: 100%
+  }
+
+  .nav.nav-tabs .nav-item .nav-link {
+      font-size: 18px
+  }
+}
+
+.close3 {
+  font-size: 32px;
+  background-color: #007BFF;
+  border-radius: 5px;
+  color: #000;
+  position: absolute;
+  top: -12px;
+  left: 451px;
+  background: transparent;
+  padding: 2px 10px;
+}

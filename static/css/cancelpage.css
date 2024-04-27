@@ -1,0 +1,129 @@
+
+
+body{
+    /* background: url('Your Cancellation Info bg.png'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 2%;
+    padding: 0%;
+    box-sizing: border-box;
+    /* background: linear-gradient(to right, rgb(231, 100, 100) ,rgb(236, 156, 203) ); */
+}
+
+.cancel-box{
+    font-family: 'Times New Roman', Times, serif;
+    
+}
+
+.cancel-info table{
+    border-collapse: collapse;
+    text-align: center;
+    font-size: larger;
+    /* background-color: rgb(250, 236, 220); */
+}
+
+th,td{
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+    text-align: left;
+}
+
+.heading{
+    text-decoration: underline;
+    font-size: xx-large;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    text-transform: uppercase;
+    margin: 0px;
+}
+
+.id{
+    display: flex;
+    justify-content: space-between;
+    padding: 0%;
+    align-items: safe;
+    
+}
+
+.travel-details {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    margin-left: 5%;
+    margin-right: 5%;
+
+}
+
+.id{
+    /* display: flex; */
+    /* justify-content: space-between; */
+    padding: 0px;
+    margin-top: -90px;
+    margin-bottom: 70px;
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.city {
+    text-align: center;
+}
+
+h2{
+    text-transform: uppercase;
+}
+
+.city p{
+    font-size: larger;
+}
+
+.cancel-box .fare{
+    text-decoration: underline;
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    margin-right: 30px;
+    font-size: x-large;
+}
+
+.refund {
+    display: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: larger;
+    margin-right: 30px;
+}
+
+.refund.active {
+    display: flex;
+    justify-content: right;
+}
+
+.cancel-box .tip{
+    display: flex;
+    justify-content: right;
+    margin-right: 30px;
+    margin-top: 10px;
+    font-size: smaller;
+}
+
+.perseatamount, #updatedamount, #urefundamount {
+    display: none;
+}
+
+.back{
+    background-color: rgb(133, 133, 238);
+    font-size: large;
+    color: white;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.3s ease-out;
+}
+
+
+.back:hover{
+    background-color: blue;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}

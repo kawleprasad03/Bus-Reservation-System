@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Reservation System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      /* background-color: #898ae6; */
+      background-color: #d7d6fe;
+    }
+
+    header {
+      background-color: #898ae6;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      font-size: x-large;
+      text-align: center;
+      padding: 5px 0px;
+    }
+    
+    .outerdiv {
+      display: flex;
+      justify-content: center;
+      margin: 2% 0%;
+      font-size: larger;
+    }
+
+    .innerdiv {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .reservationtext, .boarding, .dropping , .busnumber {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    .traveldate {
+      text-align: right;
+    }
+
+    th, td {
+      padding: 15px;
+    }
+
+    .note {
+      font-size: large;
+      color: #FF474C;
+    }
+
+    .back{
+      position: absolute;
+      top: 5px;
+      right: 40px;
+      font-size: large;
+      color: white;
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 5px;
+      transition: 0.3s ease-out;
+      background-color: rgb(133, 133, 238);
+    }
+    
+    .back:hover{
+      background-color: blue;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    .download-button-div {
+      display: flex;
+      justify-content: center;
+    }
+    .download {
+      background-color: #007BFF;
+      font-size: large;
+      color: white;
+      padding: 10px 20px;
+      border: 0;
+      border-radius: 5px;
+      transition: 0.3s ease-out;
+    }
+
+    .download:hover {
+      background-color: #0056b3;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
+</head>
+
+<body>
+  <header>
+    <h2>
+        My Bus Ticket
+    </h2>
+    <form action="{% url 'home' %}" method="post">
+      {% csrf_token %}
+      <button class="back" type="submit">Home</button>
+    </form>
+  </header>
+  <div class="outerdiv">
+    <div class="innerdiv">
+      <div class="traveldate">
+        Travel Date : {{ traveldate }}
+      </div>
+      <div class="reservationtext">
+        Your Reservation ID : {{ reservationid }}
+      </div>
+      <div class="busnumber">
+        Bus Number: {{ busnumber }}
+      </div>
+      <div class="boarding">
+        Boarding : {{ boarding }} <br>
+        Boarding Address : {{ boardingadd }}
+      </div>
+      <div class="dropping">
+        Dropping : {{ dropping }} <br>
+        Dropping Address : {{ droppingadd }}
+      </div>
+      <h3>
+        Passenger Details
+      </h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sr No</th>
+            <th scope="col">Seat No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for passenger in passengersdata %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ passenger.0 }}</td>
+            <td>{{ passenger.1 }}</td>
+            <td>{{ passenger.2 }}</td>
+            <td>{{ passenger.3 }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <div class="note">
+        Please note your Reservation ID
+      </div>
+    </div>
+  </div>
+  <div class="download-button-div">
+    <button class="download" type="button">download</button>
+  </div>
+
+  <script>
+    const download = document.querySelector('.download');
+        download.addEventListener('click', function() {
+            // Get HTML content
+            var content = document.querySelector('.outerdiv');
+            var heading = "<h2>Bus Ticket</h2>";
+            var opt = {
+                // margin : 2,
+                filename : "Myticket.pdf",
+                image : {type: 'jpeg', quality: 0.98},
+                // html2canvas : {scale: 2},
+                jsPDF : {unit: "in", format: "letter", orientation: "landscape"},
+                // resolution: {
+                //   height:  600,
+                //   width:  371,
+                // },
+                // before: [heading],
+            }
+
+            // content.innerHTML = heading + content.innerHTML;
+            html2pdf().from(content).set(opt).save();
+        });
+  </script>
+
+</body>
+
+</html>

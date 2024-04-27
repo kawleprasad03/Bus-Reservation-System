@@ -1,0 +1,414 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Seat Booking System</title>
+  <link rel="stylesheet" href="{% static 'css/seatbook.css' %}">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+  <!-- <form action="../bookedseat/" method="post"> -->
+  <form action="{% url 'bookedseat' searchbusid=searchbusdata.0 %}" method="post">
+    {% csrf_token %}
+  <div class="background">
+    <div class="header">
+      <div class="travelingcity">
+        {{source}}
+        <span><img src="{% static 'image/icons8-right-arrow-unscreen1.gif'%}" class="imgarrow"></span>
+        {{destination}}
+      </div>
+      <div class="account-check">{{account_name}}</div>
+      <div class="selected-date">
+        &lt;
+        <div class="date-day">
+          <div>
+            {{date}} {{month}} {{year}}
+          </div>
+          <div>
+            {{day}}
+          </div>
+        </div>
+        &gt;
+      </div>
+    </div>
+    <div class="legend">
+      <h3>Seat Legend</h3>
+      <div class="avail-unavail">
+        <div class="available-legend"></div>
+        <div class="avail-text">Available</div>
+        <div class="unavailable-legend"></div>
+        <div class="unavailavle">Unavailable</div>
+        <div class="checktypeofbus">{{ typecheck }}</div>
+        <input type="hidden" name="Tdate" value="{{date}} {{month}} {{year}}">
+        <div class="allbookedseat">{{ bookedseatno }}</div>
+      </div>
+    </div>
+
+    <div class="seat-points">
+      <div class="ACseatsbus">
+        <div class="ACseat-points">
+          <div class="deck">Lower Deck</div>
+          <div id="seats1">
+            <img src="{% static 'image/icons8-steering-wheel-26.png' %}" alt="Steering wheel icon" id="steering-wheel">
+            <!-- First ACRow -->
+            <div class="ACrow">
+              <div id="ACrow1">
+              </div>
+            </div>
+            <!-- Second ACRow -->
+            <div class="ACrow">
+              <div id="ACrow2">
+              </div>
+            </div>
+            <!-- Third ACRow -->
+            <div class="ACrow">
+
+              <div id="ACrow3">
+              </div>
+            </div>
+
+          </div>
+          <div class="ACseat-points">
+            <div class="deck">Upper Deck</div>
+            <div id="seats2">
+              <!-- First ACRow -->
+              <div class="ACrow">
+                <div id="ACrow4">
+                </div>
+              </div>
+              <!-- Second ACRow -->
+              <div class="ACrow">
+                <div id="ACrow5">
+                </div>
+              </div>
+              <!-- Third ACRow -->
+              <div class="ACrow">
+
+                <div id="ACrow6">
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="seats">
+        <img src="{% static 'image/icons8-steering-wheel-26.png' %}" alt="Steering wheel icon" id="steering-wheel">
+        <!-- First Row -->
+        <div class="row">
+          <div id="row1">
+          </div>
+        </div>
+        <!-- Second Row -->
+        <div class="row">
+          <div id="row2">
+          </div>
+        </div>
+        <!-- Third Row -->
+        <div class="row">
+
+          <div id="row3">
+          </div>
+        </div>
+        <!-- Fourth Row -->
+        <div class="row">
+          <div id="row4">
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- boarding and dropping html  -->
+
+      <div class="container">
+        <div class="headerpoint">
+          <div id="boardingHeader">Boarding Point</div>
+          <div id="droppingHeader">Dropping Point</div>
+        </div>
+        <hr>
+        <div class="radio-div">
+          <div class="options" id="boardingOptions">
+            {% for board in boardingpoints %}
+            <input type="radio" id="boardingOption{{ forloop.counter }}" name="boarding" value="{{ board.0}} {{ board.1 }} / {{ board.2 }}">
+            <label for="boardingOptionLabel">
+              {{ board.0}}&nbsp;
+              {{ board.1 }}
+              <br>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <label for="address">
+                {{ board.2 }}
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </label>
+            </label><br><br>
+            {% endfor %}
+          </div>
+
+          <div class="options" id="droppingOptions">
+            {% for drop in droppingpoints%}
+            <input type="radio" id="droppingOption{{ forloop.counter }}" name="dropping" value="{{ drop.0 }} {{ drop.1 }} / {{ drop.2 }}">
+            <label for="droppingOptionLabel">
+              {{ drop.0 }}&nbsp;
+              {{ drop.1 }}<br>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <label for="address">
+                {{ drop.2 }}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              </label>
+            </label><br><br>
+            {% endfor %}
+          </div>
+        </div>
+        <hr>
+        <div class="amount">
+          <div>
+            Amount
+          </div>
+          <div>
+            <span>
+              INR
+            </span>
+            <span>
+              {{ searchbusdata.6 }}
+            </span>
+          </div>
+        </div>
+        <div class="continue-button">
+          <input id="continue" type="button" value="continue">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- passenger details form  -->
+  <!-- <form action="" method="post"> -->
+  {% csrf_token %}
+  <div class="passenger-details">
+    <div class="details-box">
+      <h2 class="heading">Passenger details</h2>
+      <button class="close">&times;</button>
+      <div class="inner-details">
+
+      </div>
+      <!-- <div class="inner-box">
+        <div class="form-group1">
+          <h3 class="subheading">Passenger 1 | Seat S01</h3>
+          <hr>
+          <label for="passengerName" class="passenger-label">Name</label>
+          <input type="text" class="passengerName" placeholder="Enter Name" required>
+        </div>
+
+        <div class="form-group2">
+          <div class="gender-select">
+            <label for="gender" class="passenger-label">Gender</label>
+
+            <select class="gender" required>
+              <option value="select" selected hidden disabled>Select</option>
+              <option value="male">Male</option>
+              <option value="male">Female</option>
+            </select>
+          </div>
+          <div class="age">
+            <label for="passengerAge" class="passenger-label">Age</label>
+            <input type="number" class="passengerAge" placeholder="Enter Age" required>
+          </div>
+        </div>
+
+        <div class="form-group3">
+          <label for="cityname" class="passenger-label">City</label>
+          <input type="text" id="cityname" placeholder="Enter City" required>
+        </div>
+      </div>
+
+      <br>
+      <div class="inner-box">
+        <div class="form-group1">
+
+          <h3 class="subheading">Passenger 2 | Seat S02</h3>
+          <hr>
+          <label for="passengerName" class="passenger-label">Name</label>
+          <input type="text" class="passengerName" placeholder="Enter Name" required>
+        </div>
+
+        <div class="form-group2">
+          <div class="gender-select">
+            <label for="gender" class="passenger-label">Gender</label>
+            <select class="gender" required>
+              <option value="select" selected hidden disabled>Select</option>
+              <option value="male">Male</option>
+              <option value="male">Female</option>
+            </select>
+          </div>
+          <div class="age">
+            <label for="passengerAge" class="passenger-label">Age</label>
+            <input type="number" class="passengerAge" placeholder="Enter Age" required>
+          </div>
+        </div>
+
+      </div> -->
+      <br>
+      <hr>
+
+      <label for="contact_details" style="text-align: center;" class="passenger-label">Contact Details</label>
+      <hr>
+      <div class="inner-box">
+        <p style="text-transform: capitalize;margin-left: 15px;
+        margin-right: 15px;">*Your Ticket will be sent to your email id</p>
+
+        <div class="form-group3">
+          <label for="email" class="passenger-label">Email Id:</label>
+          <input type="email" id="email1" placeholder="Enter Email " value="{{cust_email}}" required>
+          <br><br>
+          <label for="phone_no" class="passenger-label">Phone Number:</label>
+          <input type="tel" id="phone_no" name="phone_no" placeholder="Enter Phone Number" value="{{cust_phone}}"
+            required>
+
+        </div>
+        <hr>
+
+        <label for="amount" class="passenger-label" style="text-align: end;margin-right: 15px;">
+          Total Amount: INR
+          <span id="TotalAmount" name="TotalAmount"></span>
+        </label>
+      </div>
+      <div class="proceed-button">
+        <!-- <button type="button" id="rzp-button1">Proceed To</button> -->
+        <button type="button" id="proceed">Proceed To</button>
+      </div>
+      <input type="hidden" id="TravelTotalAmount" name="TravelTotalAmount">
+      <!-- <input type="hidden" id="paymentorderid" name="paymentorderid" value="{{payment.id}}">
+      <input type="hidden" id="paymentamount" name="paymentamount" value="{{payment.amount}}"> -->
+      <!-- <input type="hidden" id="AllPassengerSeatNO" name="AllPassengerSeatNO"> -->
+    </div>
+  </div>
+  <!-- </form> -->
+
+  <!-- payment page show -->
+    <div class="container1 bg-light d-md-flex align-items-center">
+      <div class="card box2">
+        <div class="d-flex align-items-center justify-content-between p-md-5 p-4" style="margin-bottom: -60px;"> <span
+            class="h5 fw-bold m-0" style="font-size: 20px;">Payment methods</span>
+          <button class="close3">&times;</button>
+          <div class="btn btn-primary bar"><span class="fas fa-bars"></span></div>
+        </div>
+        <ul class="nav nav-tabs mb-3 px-md-4 px-2">
+          <li class="nav-item"> <a class="nav-link px-2 active" aria-current="page" href="#">Credit Card</a> </li>
+          <!-- <li class="nav-item"> <a class="nav-link px-2" href="#">Mobile Payment</a> </li> -->
+        </ul>
+        <div class="px-md-5 px-4 mb-4 d-flex align-items-center">
+        </div>
+        <div class="paymentrow" style="text-align: left;">
+          <div class="col-12" style="margin-top: 25px;">
+            <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Credit Card</span>
+              <div class="inputWithIcon"> <input class="form-control" type="text" value="5136 1845 5468 3894"> <span
+                  class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png"
+                    alt=""></span> </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex flex-column ps-md-5 px-md-0 px-4 mb-4"> <span>Expiration<span
+                  class="ps-1">Date</span></span>
+              <div class="inputWithIcon"> <input type="text" class="form-control" value="05/20"> <span
+                  class="fas fa-calendar-alt"></span> </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex flex-column pe-md-5 px-md-0 px-4 mb-4"> <span>Code CVV</span>
+              <div class="inputWithIcon"> <input type="password" class="form-control" style="border: none;border-bottom: 1px solid #ddd;
+                          box-shadow: none;
+                          height: 20px;
+                          font-weight: 600;
+                          font-size: 14px;
+                          padding: 15px 0px;
+                          letter-spacing: 1.5px;
+                          border-radius: 0;" value="123"> <span class="fas fa-lock"></span> </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Name</span>
+              <div class="inputWithIcon"> <input class="form-control text-uppercase" type="text"
+                  value="{{account_name}}"> <span class="far fa-user"></span> </div>
+            </div>
+          </div>
+          <div class="col-12 px-md-5 px-4 mt-3">
+            <button type="submit" class="btn btn-primary w-100">Pay</button>
+            <!-- <div class="btn btn-primary w-100">Pay</div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+
+  <!-- sign up form is not already user -->
+  <div class="signup">
+    <form action="{% url 'seatbookinsertsignup' searchbusid=searchbusdata.0 %}" method="post" class="signup-form">
+      {% csrf_token %}
+      <h2>Sign Up</h2>
+      <button class="close2">&times;</button>
+      <div class="name">
+        <div class="firstname">
+          <label for="fname">First Name</label><br>
+          <input type="text" id="fname" name="fname" required>
+        </div>
+        <div class="lastname">
+          <label for="lname">Last Name</label><br>
+          <input type="text" id="lname" name="lname" required>
+        </div>
+      </div>
+      <br>
+      <div class="age-gender">
+        <div class="genderdiv">
+          <label for="gender">Gender</label><br>
+          <select id="gender" name="gender" required>
+            <option value="select" selected hidden disabled>Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="agediv">
+          <label for="age">Age</label><br>
+          <input type="text" id="age" name="age" required>
+        </div>
+      </div>
+      <br>
+      <div class="phone-email">
+        <label for="phone">Phone Number</label><br>
+        <input type="text" id="phone" name="phone" required><br><br>
+        <label for="email">Email ID</label><br>
+        <input type="email2" id="email2" name="email" required>
+      </div>
+      <br>
+      <div class="username">
+        <label for="uname">Username</label><br>
+        <input type="text" id="uname" name="uname" required>
+      </div>
+      <br>
+      <div class="password-confirmpass">
+        <div class="password">
+          <label for="pwd">Password</label><br>
+          <input type="password" id="pwd" name="pwd" required><br>
+          <img src="{% static 'image/icons8-hide-30.png' %}" id="eyeicon2">
+        </div>
+        <div class="confirmpass">
+          <label for="cpwd">Confirm Password</label><br>
+          <input type="password" id="cpwd" name="cpwd" required>
+          <img src="{% static 'image/icons8-hide-30.png' %}" id="eyeicon3">
+        </div>
+      </div>
+      <br>
+      <div class="button">
+        <input type="submit" id="save" value="Submit">
+      </div>
+    </form>
+  </div>
+  <script src="{% static 'js/seatbook.js' %}"></script>
+</body>
+
+</html>

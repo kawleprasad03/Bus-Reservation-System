@@ -1,0 +1,74 @@
+        body {
+            margin: 0;
+            padding: 0;
+            /* background-color: #898ae6; */
+        }
+       
+        .header{
+            font-weight: bolder;
+            font-size: 40px;
+            /* position: relative; */
+            text-align: center;
+            /* text-decoration: underline; */
+            margin-top: 0px;
+            background-color: #d7d6fe;
+            padding: 10px 0;
+        }
+
+        .constant{
+            /* display: flex; */
+            text-align: center;
+            justify-content: space-evenly;
+            font-size: 22px;
+            padding-bottom: 10px;
+        }
+
+        .ticket-container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .ticket{
+            width: 350px;
+            background-color: #898ae6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .ticket h2{
+            font-size: 25px;
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .ticket p{
+            font-size: 20px;
+            margin: 0;
+            margin-bottom: 10px;
+
+        }
+
+        .ticket strong{
+            font-weight: bold;
+        }
+
+        .back{
+            position: absolute;
+            /* bottom: 40px; */
+            right: 50%;
+            background-color: rgb(133, 133, 238);
+            font-size: large;
+            color: white;
+            padding: 10px 20px;
+            border: 0;
+            border-radius: 5px;
+            transition: 0.3s ease-out;
+        }
+
+        .back:hover{
+            background-color: blue;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }

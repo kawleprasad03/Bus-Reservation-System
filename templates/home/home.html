@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    <link rel="stylesheet" href="{%static  'css/home.css' %}">
+    <link rel="shortcut icon" href="{% static 'image/logo.ico' %}" type="image/x-icon">
+    <title>Bus Reservation System</title>
+</head>
+<body>
+    <div class="background">
+
+        
+        {% include "home/header.html" %}
+    
+        <div class="search-container">
+            <h1>Find Your Bus</h1>
+            <form class="search-form" method="post" action="../search/">
+                {% csrf_token %}
+                <div class="custom-select">
+                    <select class="location" id="from" name="from">
+                        <option value="Sources" selected disabled hidden>Sources</option>
+                        {% for l in locations %}
+                        <option value="{{l.loc}}">{{l.loc}}</option>
+
+                        {% endfor %}   
+                    </select>
+                </div>
+                <div class="custom-select">
+                    <select class="location" id="to" name="to">
+                        <option value="Destination" selected disabled hidden>Destination</option>
+                        {% for l in locations %}
+                        <option value="{{l.loc}}">{{l.loc}}</option>
+
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <!-- <input type="text" id="from" placeholder="From"> -->
+                <!-- <input type="text" id="to" placeholder="To"> -->
+                <input type="date" id="travel-date" name="traveldate">
+                <button type="submit" class="search-button" name="searchButton">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="login">
+        <div class="container">
+            <div class="login-box">
+                <button class="close1">&times;</button>
+                <h1>Login</h1>
+                <form action="../logincheck/" method="POST" id="loginform">
+                    {% csrf_token %}
+                    <div class="textbox">
+                        <input type="text" id="lusername" name="lusername" placeholder="Username" required>
+                    </div>
+                    <div class="textbox">
+                        <input type="password" id="lpassword" name="lpassword" placeholder="Password" required>
+                        <img src="{% static 'image/icons8-hide-30.png' %}" id="eyeicon1">
+                    </div>
+                    <button type="submit" class="login-check">Login</button>
+                </form>
+                <p class="signup-link">Don't have an account? <a href="#" id="sign-up">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="signup">
+        <form action="../insertsignup/" method="post" class="signup-form">
+            {% csrf_token %}
+            <h2>Sign Up</h2>
+            <button class="close2">&times;</button>
+            <div class="name">
+                <div class="firstname">
+                    <label for="fname">First Name</label><br>
+                    <input type="text" id="fname" name="fname" required>
+                </div>
+                <div class="lastname">
+                    <label for="lname">Last Name</label><br>
+                    <input type="text" id="lname" name="lname" required>
+                </div>
+            </div>
+        <br>
+            <div class="age-gender">
+                <div class="genderdiv">
+                    <label for="gender">Gender</label><br>
+                    <select id="gender" name="gender" required>
+                        <option value="select" selected hidden disabled>Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="agediv">
+                    <label for="age">Age</label><br>
+            <input type="text" id="age" name="age" required>
+                </div>
+            </div>
+        <br>
+        <div class="phone-email">
+            <label for="phone">Phone Number</label><br>
+            <input type="text" id="phone" name="phone" required><br><br>
+            <label for="email">Email ID</label><br>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <br>
+        <div class="username">
+            <label for="uname">Username</label><br>
+            <input type="text" id="uname" name="uname" required>
+        </div>
+        <br>
+        <div class="password-confirmpass">
+            <div class="password">
+                <label for="pwd">Password</label><br>
+                <input type="password" id="pwd" name="pwd" required><br>
+                <img src="{% static 'image/icons8-hide-30.png' %}" id="eyeicon2">
+            </div>
+            <div class="confirmpass">
+                <label for="cpwd">Confirm Password</label><br>
+                <input type="password" id="cpwd" name="cpwd" required>
+                <img src="{% static 'image/icons8-hide-30.png' %}" id="eyeicon3">
+            </div>
+        </div>
+        <br>
+        <div class="button">
+            <input type="submit" id="save" value="Submit">
+        </div> 
+        </form>        
+      </div>
+    <footer>
+        <!-- Footer content -->
+    </footer>
+    <!-- <script>
+        
+    </script> -->
+    <!-- {{account_name|json_script:"account_name-data"}} -->
+    <script src="{% static 'js/home.js' %}" type="text/javascript"></script>
+</body>
+</html>

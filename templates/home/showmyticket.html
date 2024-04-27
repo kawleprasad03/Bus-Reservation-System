@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Trail Show Ticket</title>
+    <link rel="stylesheet" href="{%static  'css/showmyticket.css' %}">
+</head>
+<body>
+    <p class="header">Your Ticket</p>
+    
+    <div class="constant">
+        <p class="const"><strong>Date of Journey:</strong> {{ reserv_date }}  &nbsp; &nbsp;&nbsp; &nbsp; <strong>Boarding at:</strong> {{ boardingpoint }} &nbsp; &nbsp;&nbsp; &nbsp; <strong> Departure to:</strong>{{ droppingpoint }}</p>     
+        <p class="const"><strong> Boarding time:</strong>{{ boardingtime }} &nbsp; &nbsp;&nbsp; &nbsp; <strong> Departure time:</strong>{{ droppingtime }}</p>
+        <p class="const"><strong> Boarding Address:</strong>{{ boardingadd }} &nbsp; &nbsp;&nbsp; &nbsp; <strong> Departure Address:</strong>{{ droppingadd }}</p>
+    </div>
+    
+    <div class="ticket-container">
+    {% for passenger in passengersdeatils%}
+        <div class="ticket"> 
+            <h2>Ticket details</h2>
+            <p><strong>Passenger name:</strong>{{ passenger.0 }}</p>
+            <p><strong>Seat No:</strong>{{ passenger.1 }}</p>
+            <p><strong>Gender:</strong>{{ passenger.2 }}</p>
+            <p><strong>Age:</strong>{{ passenger.3 }}</p>
+
+        </div>
+    {% endfor %}
+    </div><br>
+    <pre>
+    <strong>Note:</strong>Please keep this digital copy of ticket with you while traveling
+    </pre>
+    <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+        <button class="back" type="submit">Home</button>
+    </form>
+</body>
+</html>

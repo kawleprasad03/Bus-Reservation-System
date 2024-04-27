@@ -1,0 +1,415 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global styles */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+}
+
+.background{
+    background-image: url('/static/image/busimage.jpg');
+    /* background-image: url("{% static 'image/busimage.jpg' %}"); */
+    padding-bottom: 22%;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+}
+
+
+.img1{
+    height: 55px;
+}
+
+.navbar img{
+    position: absolute; 
+    left: 0;
+    top: 0;
+}
+
+.login-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-button.active-button {
+    visibility: hidden;
+}
+
+.account-info {
+    position: absolute;
+    display: flex;
+    right: 20px;
+    top: 11px;
+    visibility: hidden;
+    align-items: center;
+}
+
+.account-info.active-account {
+    visibility: visible;
+}
+
+.img2 {
+    height: 35px;
+}
+
+.log-out {
+    margin-left: 10px;
+}
+
+/* Search container styles */
+.search-container {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin: 60px auto;
+    max-width: 1060px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    padding-bottom: 20px;
+    gap: 10px;
+}
+
+
+#lusername , #lpassword , input[type="date"] {
+    padding: 10px;
+    font-size: larger;
+    border: thin solid blue;
+    border-radius: 5px;
+    width: 100%;
+}
+
+input[type="date"]:focus , #lpassword:focus , #lusername:focus {
+    outline: 0;
+}
+
+.search-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 50px;
+    /* 20xp */
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Footer styles */
+/* footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+} */
+
+
+#from , #to {
+    background-color: white;
+    border: thin solid blue;
+    border-radius: 5px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 7.5em 0.5em 5em;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.location {
+    background-image:
+        linear-gradient(45deg, transparent 50%, gray 50%),
+        linear-gradient(135deg, gray 50%, transparent 50%),
+        radial-gradient(#ddd 70%, transparent 72%);
+    background-position:
+        calc(100% - 20px) calc(1em + 2px),
+        calc(100% - 15px) calc(1em + 2px),
+        calc(100% - .5em) .5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1.5em 1.5em;
+    background-repeat: no-repeat;
+}
+
+.location:focus {
+    background-image:
+        linear-gradient(45deg, white 50%, transparent 50%),
+        linear-gradient(135deg, transparent 50%, white 50%),
+        radial-gradient(gray 70%, transparent 72%);
+    background-position:
+        calc(100% - 15px) 1em,
+        calc(100% - 20px) 1em,
+        calc(100% - .5em) .5em;
+    background-size:
+        5px 5px,
+        5px 5px,
+        1.5em 1.5em;
+    background-repeat: no-repeat;
+    border: thin solid green;
+    outline: 0;
+}
+
+
+.location:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+
+
+/* login css  from here */
+.login {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    /* height: 100vh; */
+    position: absolute;
+    top: 25%;
+    left: 18px;
+    width: -webkit-fill-available;
+    display: none;
+    transform: scale(0);
+    transition: transform .3s ease,height .2s ease;
+}
+
+.login.active-login{
+    transform: scale(1);
+    display: flex;
+}
+.container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Style the login box */
+.login-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the login form */
+.login-box h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.textbox {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#eyeicon1 {
+    position: absolute;
+    width: 20px;
+    top: 11px;
+    right: 5px;
+}
+
+#username ,#password  {
+    width: 100%;
+    padding: 10px 15px;
+    outline: none;
+    font-size: 16px;
+    border: thin solid blue;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.close1 {
+    font-size: 30px;
+    background-color: #007BFF;
+    color: #000;
+    position: relative;
+    top: -20px;
+    left: 181px;
+    background: transparent;
+    padding: 2px 10px;
+}
+button:hover {
+    background-color: #0056b3;
+}
+
+.signup-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+
+/* signup css */
+
+.signup{
+    width: 35%;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+    position: absolute;
+    top: -5%;
+    left: 32%;
+    transform: scale(0);
+    display: none;
+}
+
+.signup.active-signup {
+    transform: scale(1);
+    display: block;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.close2 {
+    font-size: 30px;
+    background-color: #007BFF;
+    color: #000;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background: transparent;
+    padding: 2px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.name , .age-gender , .password-confirmpass {
+    display: flex;
+    justify-content: space-between;
+}
+
+#gender {
+    -webkit-appearance: none;
+}
+
+#fname, #lname, #gender, #age, #phone, #email, #uname, #pwd , #cpwd , input[type=password] {
+    width: 100%;
+    padding: 10px 15px;
+    /* margin: 8px 0; */
+    display: inline-block;
+    border: thin solid blue;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#fname:focus ,
+#lname:focus , 
+#gender:focus ,
+#age:focus ,
+#phone:focus , 
+#email:focus , 
+#uname:focus , 
+#pwd:focus , 
+#cpwd:focus , 
+input[type=password]:focus  {
+    outline: 0;
+}
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+input[type=submit] {
+    width: 25%;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type=submit]:hover {
+    background-color: #0056b3;
+}
+
+label {
+    color: #888;
+    font-size: 18px;
+}
+
+#eyeicon2 {
+    position: absolute;
+    bottom: 96px;
+    width: 15px;
+    right: 261px;
+}
+
+#eyeicon3 {
+    position: absolute;
+    width: 15px;
+    bottom: 96px;
+    right: 24px;
+}
+
+
+
+

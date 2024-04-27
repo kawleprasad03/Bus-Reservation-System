@@ -1,0 +1,242 @@
+* {
+margin: 0;
+padding: 0;
+}
+
+body {
+/* background-color: #898ae6; */
+background-color: #d7d6fe;
+}
+
+header {
+background-color: #898ae6;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+font-size: x-large;
+text-align: center;
+padding: 5px 0px;
+}
+
+
+
+    /*### Passenger details form Style ### */
+.passenger-details {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.passenger-details.active {
+    display: flex;
+    transform: scale(1);
+}
+
+
+.details-box {
+align-content: center;
+background-color: white;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+padding: 20px;
+border-radius: 8px;
+width: 82%;
+height: fit-content;
+padding-top: 0%;
+display: -webkit-box;
+flex-wrap: wrap;
+-webkit-box-pack: center;
+}
+
+.inner-box {
+    background-color: whitesmoke;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    border: thin solid blue;
+    width: 500px;
+    height: fit-content;
+    padding-top: -2%;
+    margin: 10px;
+}
+
+.form-group1 , .form-group2 , .form-group3 {
+    margin-bottom: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.form-group2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.passenger-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    margin-top: 7px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: thin solid blue;
+    border-radius: 5px;
+}
+
+input:focus {
+outline: 0;
+}
+
+.passengerId {
+    display: none;
+}
+
+.gender{
+    width: 100px;
+    height: 30px;
+    border: thin solid blue;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    box-sizing: content-box;
+    -webkit-appearance: none;
+}
+
+select:focus {
+outline: 0;
+}
+
+
+button {
+    background-color: #007BFF;
+    margin-top: 10px;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;  
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+.subheading{
+font-size: large;
+}
+
+
+hr {
+width: 100%;
+}
+
+
+/* boarding and dropping Css from below */
+/* .centercontainerdiv {
+display: flex;
+justify-content: center;
+margin-top: 20px;
+} */
+
+.container {
+    border: 1px solid #ffffff;
+    width: 40%;
+    background-color: #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    /* margin-right: 10px; */
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
+.radio-div {
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    overflow-y: scroll;
+    height: 215px;
+}
+.radio-div::-webkit-scrollbar {
+    width: 10px;
+}
+
+.radio-div::-webkit-scrollbar-track {
+    background: whitesmoke;
+}
+
+.radio-div::-webkit-scrollbar-thumb {
+    background: #0056b3;
+    border-radius: 60px;
+}
+
+input[type=radio] {
+    width: 45px;
+    height: 17px;
+    margin-left: -5px;
+}
+
+label[for="address"] {
+    font-size: large;
+    color: rgba(0, 0, 0, 0.467);
+    margin-left: 48px;
+}
+
+.amount {
+    display: none;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.continue-button {
+    display: flex;
+    justify-content: center;    
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#continue:hover {
+    background-color: #0056b3;
+}
+
+#continue {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    width: 15%;
+    /* padding: 10px 55px; */
+    cursor: pointer;
+    font-size: larger;
+    transition: background-color 0.3s ease;
+}
+
+.options {
+    display: none;
+}
+
+.headerpoint {
+    cursor: pointer;
+    margin-bottom: 10px;
+    font-weight: bold;
+    display: flex;
+    gap: 60px;
+    font-size: x-large;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#boardingHeader.active {
+border-bottom: thick solid blue;
+}
+
+#droppingHeader.active {
+border-bottom: thick solid blue;
+}
+
+/* Style for visible options */
+.options.active {
+    display: block;
+}

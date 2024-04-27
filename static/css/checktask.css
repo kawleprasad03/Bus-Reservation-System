@@ -1,0 +1,138 @@
+ /* Reset some default styles */
+ body {
+    margin: 0;
+    padding: 0;
+    /* background-color: #898ae6; */
+    background-color: #d7d6fe;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 200px;
+}
+
+
+.img1{
+    height: 55px;
+}
+
+.navbar img{
+    position: absolute; 
+    left: 0;
+    top: 0;
+}
+
+.login-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+.login-button.active-button {
+    visibility: hidden;
+}
+
+.account-info {
+    position: absolute;
+    display: flex;
+    right: 20px;
+    top: 11px;
+    visibility: hidden;
+    align-items: center;
+}
+
+.account-info.active-account {
+    visibility: visible;
+}
+
+.img2 {
+    height: 35px;
+}
+
+.log-out {
+    margin-left: 10px;
+}
+
+/* Style the main content */
+main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form {
+    /* background-color: #f66a6a; */
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"] {
+    width: 96%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: thin solid blue;
+    border-radius: 5px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    outline: 0;
+}
+
+button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.center-button {
+    text-align: center;
+}
+
+.reservationidcheck , .cancellationdatecheck , .changedetailsdatecheck , .updatestatus {
+    display: none;
+}
