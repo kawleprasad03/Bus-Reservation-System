@@ -723,6 +723,6 @@ def updatedetails(request):
     action['changedetailsdatecheck'] = None
     action['updatestatus'] = 'successful'
 
-    print(passengersid,upassengersname,upassengersgender,upassengersage,uboarding,udropping)
+    # print(passengersid,upassengersname,upassengersgender,upassengersage,uboarding,udropping)
     return render(request,'home/checktask.html',action)
     
