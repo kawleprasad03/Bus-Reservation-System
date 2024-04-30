@@ -653,6 +653,26 @@ close3.addEventListener('click' , () => {
 
 })
 
+const bycash = document.querySelector("#bycash");
+const creaditnav = document.querySelector("#creaditnav");
+const paybutton = document.querySelector("#paybutton");
+let inputWith = document.querySelector("#credit");
+let colmd6 = document.querySelector("#code");
+let colmd = document.querySelector("#experi");
+bycash.addEventListener("click", ()=> {
+  inputWith.style.display = "none";
+  colmd6.style.display = "none";
+  colmd.style.display = "none";
+  paybutton.textContent = "Continue";
+})
+
+creaditnav.addEventListener("click", () => {
+  inputWith.style.display = "block";
+  colmd6.style.display = "block";
+  colmd.style.display = "block";
+  paybutton.textContent = "Pay"
+})
+
 // const paymentorderid = document.querySelector('#paymentorderid').value;
 // const paymentamount = document.querySelector('#paymentamount').value;
 // console.log(paymentorderid);
