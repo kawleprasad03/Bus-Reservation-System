@@ -19,20 +19,20 @@ checkboxes.forEach(function(checkbox) {
         if (checkbox.checked){
             totalrefundamount += refunadamount;
             totalAmount -= refunadamount;
-            refundableamountdiv.textContent = totalrefundamount;
-            document.querySelector('.totalAmount').textContent = totalAmount;
-            updatedamount.value = totalAmount;
-            urefundamount.value = totalrefundamount
+            refundableamountdiv.textContent = Math.round(totalrefundamount);
+            document.querySelector('.totalAmount').textContent = Math.round(totalAmount);
+            updatedamount.value = Math.round(totalAmount);
+            urefundamount.value = Math.round(totalrefundamount);
             refunddiv.classList.add('active');
             checkedboxclick++;
         }
         else {
             totalrefundamount -= refunadamount; 
             totalAmount += refunadamount;
-            refundableamountdiv.textContent = totalrefundamount;
-            document.querySelector('.totalAmount').textContent = totalAmount;
-            updatedamount.value = totalAmount;
-            urefundamount.value = totalrefundamount
+            refundableamountdiv.textContent = Math.round(totalrefundamount);
+            document.querySelector('.totalAmount').textContent = Math.round(totalAmount);
+            updatedamount.value = Math.round(totalAmount);
+            urefundamount.value = Math.round(totalrefundamount);
             checkboxunclick++;
             if (checkedboxclick == checkboxunclick){
                 refunddiv.classList.remove('active');

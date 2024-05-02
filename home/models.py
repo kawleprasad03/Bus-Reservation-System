@@ -54,6 +54,7 @@ class reservation(models.Model):
     boardingAddress = models.TextField()
     droppingPoint = models.CharField(max_length=100)
     droppingAddress = models.TextField()  
+    paymentStatus = models.CharField(max_length=100)
 
 # datefield store date in 'YYYY-MM-DD' 
     

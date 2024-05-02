@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +38,7 @@
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     }
 
-    .reservationtext, .boarding, .dropping , .busnumber {
+    .reservationtext, .boarding, .dropping , .busnumber, .paymentstatus {
       text-align: left;
       margin-bottom: 5px;
     }
@@ -118,7 +117,7 @@
   </header>
   <div class="outerdiv">
     <div class="innerdiv">
-      <h2>Shiv Shakti Travels</h2>
+      <h2>HappyRide</h2>
       <div class="traveldate">
         Travel Date : {{ traveldate }}
       </div>
@@ -135,6 +134,11 @@
       <div class="dropping">
         Dropping : {{ dropping }} <br>
         Dropping Address : {{ droppingadd }}
+      </div>
+      <div class="paymentstatus">
+        {% if paymentstatus == 'Pending' %}
+          Payment Status : {{paymentstatus}}
+        {% endif %}
       </div>
       <h3>
         Passenger Details
@@ -179,13 +183,10 @@
             var opt = {
                 // margin : 2,
                 filename : "Myticket.pdf",
+                margin: [-1, 0.5, 0.5, 0.5],
                 image : {type: 'jpeg', quality: 0.98},
-                // html2canvas : {scale: 2},
+                html2canvas : {scale: 5},
                 jsPDF : {unit: "in", format: "letter", orientation: "landscape"},
-                // resolution: {
-                //   height:  600,
-                //   width:  371,
-                // },
                 // before: [heading],
             }
 

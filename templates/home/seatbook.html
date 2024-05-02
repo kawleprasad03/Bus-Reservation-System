@@ -305,7 +305,7 @@
         <div class="paymentrow" style="text-align: left;">
           <div class="col-12" style="margin-top: 25px;">
             <div class="d-flex flex-column px-md-5 px-4 mb-4" id="credit"> <span>Credit / Debit</span>
-              <div class="inputWithIcon"> <input class="form-control" type="text">
+              <div class="inputWithIcon"> <input class="form-control" type="text" placeholder="5136 1845 5468 3894" maxlength="16">
                 <!-- value="5136 1845 5468 3894" -->
                 <span
                   class=""> <img src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png"
@@ -316,14 +316,14 @@
           <div class="col-md-6" id="experi">
             <div class="d-flex flex-column ps-md-5 px-md-0 px-4 mb-4"> <span>Expiration<span
                   class="ps-1">Date</span></span>
-                  <div class="inputWithIcon"> <input type="text" class="form-control" > <span
+                  <div class="inputWithIcon"> <input type="text" class="form-control" placeholder="05/20" maxlength="5"> <span
                     class="fas fa-calendar-alt"></span> </div> 
                     <!-- value="05/20" -->
             </div>
           </div>
           <div class="col-md-6" id="code">
             <div class="d-flex flex-column pe-md-5 px-md-0 px-4 mb-4"> <span>Code CVV</span>
-              <div class="inputWithIcon"> <input type="password" class="form-control" style="border: none;border-bottom: 1px solid #ddd;
+              <div class="inputWithIcon"> <input type="password" maxlength="3" placeholder="123" class="form-control" style="border: none;border-bottom: 1px solid #ddd;
                           box-shadow: none;
                           height: 20px;
                           font-weight: 600;
@@ -337,12 +337,13 @@
           <div class="col-12">
             <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Name</span>
               <div class="inputWithIcon"> <input class="form-control text-uppercase" type="text"
-                  value="{{account_name}}"> <span class="far fa-user"></span> </div>
+                  value="{{account_name}}" required> <span class="far fa-user"></span> </div>
             </div>
           </div>
           <div class="col-12 px-md-5 px-4 mt-3">
             <button type="submit" class="btn btn-primary w-100" id="paybutton">Pay</button>
             <!-- <div class="btn btn-primary w-100">Pay</div> -->
+            <input type="text" hidden id="checkpaymentstatus" name="checkpaymentstatus">
           </div>
         </div>
       </div>

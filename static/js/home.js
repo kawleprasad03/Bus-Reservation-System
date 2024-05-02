@@ -101,6 +101,7 @@ submit.addEventListener('click' , (event) => {
     alert('password incorrect!');
   }
 
+  // gender check
   const genderselectvalue = genderselect.value;
   if (genderselectvalue === "select"){
     event.preventDefault();

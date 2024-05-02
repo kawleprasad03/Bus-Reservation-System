@@ -639,9 +639,45 @@
 const proceedButton = document.querySelector('#proceed');
 const paymentdiv = document.querySelector('.card.box2');
 proceedButton.addEventListener('click', () => {
-  background.style.filter = 'blur(5px)';
-  console.log('proceed click');
-  paymentdiv.classList.add('active');
+  let checkpassengername = document.querySelectorAll(".passengerName");
+  let checkpassengerage = document.querySelectorAll(".passengerAge");
+  let checkpassengergender = document.querySelectorAll(".gender");
+  let checkflag = true;
+  // Loop through all passenger ages
+  checkpassengername.forEach(function(input) {
+    if (input.value === '') {
+        checkflag = false;
+        // alert("Please enter all passenger names!");
+        return;
+    }
+  });
+
+  // Loop through all passenger ages
+  checkpassengerage.forEach(function(input) {
+    if (input.value === '') {
+        checkflag = false;
+        // alert("Please enter all passenger ages!");
+        return;
+    }
+  });
+
+  // Loop through all passenger genders
+  checkpassengergender.forEach(function(input) {
+    if (input.value === 'select') {
+        checkflag = false;
+        // alert("Please select a gender for all passengers!");
+        return;
+    }
+  });
+  if(checkflag) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    background.style.filter = 'blur(5px)';
+    console.log('proceed click');
+    paymentdiv.classList.add('active');
+  }
+  else {
+    alert("Please Submit Passengers Details!");
+  }
 })
 
 // close payment form 
@@ -659,18 +695,24 @@ const paybutton = document.querySelector("#paybutton");
 let inputWith = document.querySelector("#credit");
 let colmd6 = document.querySelector("#code");
 let colmd = document.querySelector("#experi");
+let checkpaymentstatus = document.querySelector("#checkpaymentstatus");
+checkpaymentstatus.value = 'Successful';
+
 bycash.addEventListener("click", ()=> {
   inputWith.style.display = "none";
   colmd6.style.display = "none";
   colmd.style.display = "none";
   paybutton.textContent = "Continue";
+  checkpaymentstatus.value = 'Pending';
+  console.log(checkpaymentstatus.value);
 })
 
 creaditnav.addEventListener("click", () => {
   inputWith.style.display = "block";
   colmd6.style.display = "block";
   colmd.style.display = "block";
-  paybutton.textContent = "Pay"
+  paybutton.textContent = "Pay";
+  checkpaymentstatus.value = 'Successful';
 })
 
 // const paymentorderid = document.querySelector('#paymentorderid').value;

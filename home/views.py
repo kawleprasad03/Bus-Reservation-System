@@ -9,6 +9,9 @@ import base64
 import json
 # import razorpay
 from django.conf import settings
+import smtplib,ssl
+from email.message import EmailMessage
+import pandas as pd
 
 
 with connection.cursor() as cursor:
@@ -93,10 +96,6 @@ def search_button(request):
         
     
     # print(routecheckdict)
-
-
-
-
 
 
     if context['account_name'] == None:
@@ -249,11 +248,15 @@ def viewseats(request,searchbusid):
         cursor.execute(query1,[searchbusid])
         searchbusdata = cursor.fetchone()
     
-    query2 = "SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s OR city=%s"
+    
     with connection.cursor() as cursor:
-        cursor.execute(query2,[searchinfo['source'],searchinfo['destination']])
-        boarddroppoints = cursor.fetchall()
-        # print(boarddroppoints) 
+        cursor.execute("SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s",[searchinfo['source']])
+        sourcepoints = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s",[searchinfo['destination']])
+        destinationpoints = cursor.fetchall()
+    boarddroppoints = sourcepoints + destinationpoints
+    print(boarddroppoints) 
     
 
     searchdetails['searchbusdata'] = searchbusdata
@@ -397,6 +400,130 @@ def checktask(request):
     action['updatestatus'] = None
     return render(request,'home/checktask.html',action)
 
+
+def sendmail(ticketdetails,emailpassengerdata):
+    sender_email = "HappyRide1415@outlook.com"
+    password = "HappyJourney"
+    allSeatNumber,passengersName,passengersAge,passengersGender = zip(*emailpassengerdata)
+    df = pd.DataFrame({'Seat No':allSeatNumber,'Name':passengersName,'Age':passengersAge,'Gender':passengersGender})
+    html_table = df.to_html(index=False)  
+
+    try:
+        message = EmailMessage()
+        message["From"] = sender_email
+        message["To"] = searchdetails['cust_email']
+        message["Subject"] = "Reservation Ticket"
+
+
+        message.add_alternative("""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bus Reservation System</title>
+        <style>
+        * {{
+        margin: 0;
+        padding: 0;
+        }}
+
+        body {{
+        /* background-color: #898ae6; */
+        background-color: #d7d6fe;
+        }}
+
+        .outerdiv {{
+        display: flex;
+        justify-content: center;
+        margin: 2% 0%;
+        font-size: larger;
+        }}
+
+        .innerdiv {{
+        text-align: center;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }}
+
+        .reservationtext, .boarding, .dropping , .busnumber, .paymentstatus {{
+        text-align: left;
+        margin-bottom: 5px;
+        }}
+
+        .traveldate {{
+        text-align: right;
+        }}
+
+        .note {{
+        font-size: large;
+        color: #FF474C;
+        }}
+
+                                
+        table {{
+        border-collapse: collapse; 
+        }}
+                                
+        th, td {{
+        padding: 15px;
+        border: 1px solid black; 
+        }}
+        </style>
+        </head>
+
+        <body>
+        <div class="outerdiv">
+        <div class="innerdiv">
+        <h2>HappyRide</h2>
+        <div class="traveldate">
+        Travel Date : {0}
+        </div>
+        <div class="reservationtext">
+        Your Reservation ID : {1}
+        </div>
+        <div class="busnumber">
+        Bus Number: {2}
+        </div>
+        <div class="boarding">
+        Boarding : {3} <br>
+        Boarding Address : {4}
+        </div>
+        <div class="dropping">
+        Dropping : {5} <br>
+        Dropping Address : {6}
+        </div>
+        <div class="paymentstatus">
+        Payment Status : {8}
+        </div>
+        <h3>
+        Passenger Details : {7}
+        </h3>
+        <div class="note">
+        Please note your Reservation ID
+        </div>
+        </div>
+        </div>
+        </body>
+
+        </html>
+                """.format(ticketdetails['traveldate'],ticketdetails['reservationid'],ticketdetails['busnumber'],ticketdetails['boarding'],ticketdetails['boardingadd'],ticketdetails['dropping'],ticketdetails['droppingadd'],html_table,ticketdetails['paymentstatus']),subtype='html')
+
+        print(ticketdetails['passengersdata'],type(ticketdetails['passengersdata']))
+        context = ssl.create_default_context()
+        with smtplib.SMTP('smtp.office365.com', 587) as smtp:
+            smtp.ehlo()
+            smtp.starttls(context=context)
+            smtp.ehlo()
+            smtp.login(sender_email, password)
+            smtp.send_message(message)
+            print('Mail Sent')
+    except:
+        print("error")
+
+
 def bookedseat(request,searchbusid):
     boardingPtAdd = request.POST['boarding']
     droppingPtAdd = request.POST['dropping']
@@ -405,38 +532,67 @@ def bookedseat(request,searchbusid):
     passengersAge = request.POST.getlist('Page')
     totalamount = int(request.POST['TravelTotalAmount'])
     allSeatNumber = request.POST.getlist('AllPassengerSeatNO')
+    paymentstatus = request.POST['checkpaymentstatus']
     tdate = request.POST['Tdate']
     showdate = tdate
     tdate = datetime.strptime(tdate, "%d %b %Y")
     boardingPtAdd = boardingPtAdd.split(" / ")
     droppingPtAdd = droppingPtAdd.split(" / ")
     print()
-    print(boardingPtAdd,droppingPtAdd)
-    print(passengersName,passengersGender,passengersAge)
-    print(searchbusid,searchdetails['account_id'])
-    print(tdate,type(tdate),totalamount,type(totalamount),allSeatNumber)
+    # print(boardingPtAdd,droppingPtAdd)
+    # print(passengersName,passengersGender,passengersAge)
+    # print(searchbusid,searchdetails['account_id'])
+    # print(tdate,type(tdate),totalamount,type(totalamount),allSeatNumber)
     searchbusid_fk = bus.objects.get(bid=searchbusid)
     customerid_fk = customer.objects.get(custid=searchdetails['account_id'])
     routeid_fk = route.objects.get(rid=searchdetails['searchbusdata'][7])
     reservprefix = 'RSV00'
     total_reserv = reservation.objects.all().count()
+    plusone_reserv = total_reserv + 1
     rid = reservprefix + str(total_reserv + 1)
-    reserv = reservation(reservid=rid, bid=searchbusid_fk, custid=customerid_fk, rid=routeid_fk , reservDate=tdate, totalAmount=totalamount, boardingPoint=boardingPtAdd[0], boardingAddress=boardingPtAdd[1], droppingPoint=droppingPtAdd[0], droppingAddress=droppingPtAdd[1])
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT reservid FROM home_reservation")
+        allreserid = cursor.fetchall()
+        # print(allreserid)
+    allreseridlist = []
+    for i in allreserid:
+        allreseridlist.append(i[0])
+    # print(allreseridlist)
+    if rid in allreseridlist:
+        rid = reservprefix + str(plusone_reserv + 1)
+    # print(rid)
+        
+    reserv = reservation(reservid=rid, bid=searchbusid_fk, custid=customerid_fk, rid=routeid_fk , reservDate=tdate, totalAmount=totalamount, boardingPoint=boardingPtAdd[0], boardingAddress=boardingPtAdd[1], droppingPoint=droppingPtAdd[0], droppingAddress=droppingPtAdd[1], paymentStatus=paymentstatus)
     reserv.save()
 
     rid_fk = reservation.objects.get(reservid=rid)
     for i in range(len(passengersName)):
         passenprefix = 'P00'
         total_passen = passengerdetails.objects.all().count()
+        plusonepassenid = total_passen + 1
         pid = passenprefix + str(total_passen + 1)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT passengerid FROM home_passengerdetails")
+            allpassenid = cursor.fetchall()
+        # print(allpassenid)
+        allpassenidlist = []
+        for j in allpassenid:
+            allpassenidlist.append(j[0])
+        # print(allpassenidlist)
+        if pid in allpassenidlist:
+            pid =  passenprefix + str(plusonepassenid + 1)
+        # print(pid)
         passen = passengerdetails(passengerid=pid, reservid=rid_fk, name=passengersName[i], gender=passengersGender[i], age=passengersAge[i])
         passen.save()
-    
+        
     seatsassign = seatassignment(reservid=rid_fk, seatnumbers=str(allSeatNumber))
     seatsassign.save()
-    print(rid,customerid_fk,searchbusid_fk)
+    # print(rid,customerid_fk,searchbusid_fk)
     passengersdata = zip(allSeatNumber,passengersName,passengersAge,passengersGender)
-    ticketdetails = {"traveldate":showdate,"reservationid":rid,"busnumber":searchdetails['searchbusdata'][1],"boarding":boardingPtAdd[0],"boardingadd":boardingPtAdd[1],"dropping":droppingPtAdd[0],"droppingadd":droppingPtAdd[1],"passengersdata":passengersdata}
+    ticketdetails = {"traveldate":showdate,"reservationid":rid,"busnumber":searchdetails['searchbusdata'][1],"boarding":boardingPtAdd[0],"boardingadd":boardingPtAdd[1],"dropping":droppingPtAdd[0],"droppingadd":droppingPtAdd[1],"passengersdata":passengersdata,"paymentstatus":paymentstatus}
+
+    emailpassengerdata = zip(allSeatNumber,passengersName,passengersAge,passengersGender)
+    sendmail(ticketdetails,emailpassengerdata)
 
     return render(request,'home/bookedseat.html',ticketdetails)
 
@@ -458,7 +614,7 @@ def cancelshowchange(request):
         return render(request,'home/checktask.html',action)
 
     with connection.cursor() as cursor:
-        cursor.execute("SELECT email FROM home_customer WHERE custid = %s",[reserv_details[8]])
+        cursor.execute("SELECT email FROM home_customer WHERE custid = %s",[reserv_details[9]])
         checkemail = cursor.fetchone()
     
     if checkemail[0] != email:
@@ -467,7 +623,7 @@ def cancelshowchange(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT * FROM home_passengerdetails WHERE reservid_id = %s",[reserv_id])
         passendata = cursor.fetchall()
-    print(passendata)
+    # print(passendata)
     date_obj = datetime.strptime(str(reserv_details[1]), '%Y-%m-%d')
     reserv_date = date_obj.strftime('%d %b %Y')
     print(reserv_date,date_obj)
@@ -475,6 +631,7 @@ def cancelshowchange(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT seatnumbers FROM home_seatassignment WHERE reservid_id = %s",[reserv_id])
         seatnumbers = cursor.fetchone()
+        print(seatnumbers)
     seatnumbers = eval(seatnumbers[0])
     
     global passengers_id
@@ -521,11 +678,11 @@ def cancelshowchange(request):
             return render(request,'home/checktask.html',action)
 
         with connection.cursor() as cursor:
-            cursor.execute("SELECT amount FROM home_bus WHERE bid = %s",[reserv_details[7]])
+            cursor.execute("SELECT amount FROM home_bus WHERE bid = %s",[reserv_details[8]])
             perpersonamount = cursor.fetchone()
 
         with connection.cursor() as cursor:
-            cursor.execute("SELECT routeway FROM home_route WHERE rid = %s",reserv_details[9])
+            cursor.execute("SELECT routeway FROM home_route WHERE rid = %s",reserv_details[10])
             sourcedestination = cursor.fetchone()
             sourcedestination = sourcedestination[0].split('-')
             # print(sourcedestination)
@@ -550,20 +707,24 @@ def cancelshowchange(request):
             return render(request,'home/checktask.html',action)
         
         with connection.cursor() as cursor:
-            cursor.execute("SELECT routeway FROM home_route WHERE rid=%s",[reserv_details[9]])
+            cursor.execute("SELECT routeway FROM home_route WHERE rid=%s",[reserv_details[10]])
             routeway = cursor.fetchone()
             routeway = routeway[0].split('-')
         
         with connection.cursor() as cursor:
-            cursor.execute("SELECT departureTime,arrivalTime FROM home_bus WHERE bid=%s",[reserv_details[7]])
+            cursor.execute("SELECT departureTime,arrivalTime FROM home_bus WHERE bid=%s",[reserv_details[8]])
             bdtime = cursor.fetchone()
 
         
-        query2 = "SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s OR city=%s"
+        # query2 = "SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s OR city=%s"
         with connection.cursor() as cursor:
-            cursor.execute(query2,[routeway[0],routeway[1]])
-            boarddroppoints = cursor.fetchall()
+            cursor.execute("SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s",[routeway[0]])
+            sourcepoints = cursor.fetchall()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT BDpoints,address FROM home_boardingdropping WHERE city=%s",[routeway[1]])
+            destinationpoints = cursor.fetchall()
             # print(boarddroppoints) 
+        boarddroppoints = sourcepoints + destinationpoints
         boardingtimelist = []
         boardingtimestring = bdtime[0]
         boardingtimelist.append(boardingtimestring)
@@ -573,7 +734,7 @@ def cancelshowchange(request):
             newtimestring = newtime.strftime('%I:%M %p')
             boardingtimelist.append(newtimestring)
             boardingtimestring = newtimestring
-        print(boardingtimelist)
+        # print(boardingtimelist)
 
         droppingtimelist = []
         droppingtimestring = bdtime[1]
@@ -585,7 +746,7 @@ def cancelshowchange(request):
             droppingtimelist.append(newtimestring)
             droppingtimestring = newtimestring
         droppingtimelist = list(reversed(droppingtimelist))
-        print(droppingtimelist)
+        # print(droppingtimelist)
 
 
         boardingpoints = zip(boardingtimelist,json.loads(boarddroppoints[0][0]),json.loads(boarddroppoints[0][1]))
@@ -617,8 +778,8 @@ def cancelticket(request):
                 seatsnumberlist.append(a[j])
         # print(a)
     # print(cpassenger)
-    print(urefundamount,updatedamount)
-    print(passengerlist,seatsnumberlist)
+    # print(urefundamount,updatedamount)
+    # print(passengerlist,seatsnumberlist)
     cancelpassengers = []
     for passid in passengerlist:
         with connection.cursor() as cursor:
@@ -631,8 +792,8 @@ def cancelticket(request):
         allseatsnumberlist = eval(allseatsnumberlist[0])
         
 
-    print(cancelpassengers)
-    print(allseatsnumberlist,type(allseatsnumberlist))
+    # print(cancelpassengers)
+    # print(allseatsnumberlist,type(allseatsnumberlist))
 
     cpassengername = []
     cpassengergender = []
@@ -664,7 +825,7 @@ def cancelticket(request):
         cancelpassenprefix = 'CAN00'
         total_cancelpassen = cancellation.objects.all().count()
         caid = cancelpassenprefix + str(total_cancelpassen + 1)
-        custid_fk = customer.objects.get(custid=reserv_details[8])
+        custid_fk = customer.objects.get(custid=reserv_details[9])
         rservid_fk = reservation.objects.get(reservid=reserv_details[0])
         canceltable = cancellation(cancelid=caid, custid=custid_fk, resverid=rservid_fk, cancelAmount=urefundamount)
         canceltable.save()
@@ -690,7 +851,7 @@ def cancelticket(request):
         cancelpassenprefix = 'CAN00'
         total_cancelpassen = cancellation.objects.all().count()
         caid = cancelpassenprefix + str(total_cancelpassen + 1)
-        custid_fk = customer.objects.get(custid=reserv_details[8])
+        custid_fk = customer.objects.get(custid=reserv_details[9])
         rservid_fk = reservation.objects.get(reservid=reserv_details[0])
         canceltable = cancellation(cancelid=caid, custid=custid_fk, resverid=rservid_fk, cancelAmount=urefundamount)
         canceltable.save()

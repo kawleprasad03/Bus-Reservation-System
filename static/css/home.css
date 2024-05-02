@@ -8,7 +8,7 @@
 /* Global styles */
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f1f1f1;
+    /* background-color: #d7d6fe; */
     margin: 0;
 }
 
@@ -413,3 +413,21 @@ label {
 
 
 
+
+/* footer css */
+.footercontent {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.copy {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.footerlogo {
+    width: 3%;
+    height: 2%;
+}

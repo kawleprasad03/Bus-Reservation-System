@@ -11,7 +11,7 @@ let reservationcheck;
 let cancellationdatecheck;
 let changedetailsdatecheck;
 let updatestatus;
-// window.addEventListener('load', function () {
+
 reservationcheck = document.querySelector('.reservationidcheck');
 cancellationdatecheck = document.querySelector('.cancellationdatecheck');
 changedetailsdatecheck = document.querySelector('.changedetailsdatecheck');
@@ -37,31 +37,4 @@ if (changedetailsdatecheck.textContent == "incoorectdate") {
 if (updatestatus.textContent == "successful") {
     alert("The passenger details have been successfully updated.");
 }
-// });
 
-
-// if (reservationcheck.textContent == "incorrect") {
-//     alert("Please check reservation ID !");
-//     reservationcheck.textContent = null
-// }
-
-
-// if (cancellationdatecheck.textContent == "incoorectdate"){
-//     alert("Cannot cancel past or ongoing travel.");
-//     cancellationdatecheck.textContent = null;
-// }
-
-
-
-// if (changedetailsdatecheck.textContent == "incoorectdate"){
-//     console.log(changedetailsdatecheck.textContent);
-//     alert("Cannot change details of past or ongoing travel.");
-//     changedetailsdatecheck.textContent = null;
-//     console.log(changedetailsdatecheck.textContent);
-// }
-
-
-// if (updatestatus.textContent == "successful"){
-//     alert("The passenger details have been successfully updated.");
-//     updatestatus.textContent = null;
-// }
